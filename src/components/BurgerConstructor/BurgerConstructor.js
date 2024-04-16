@@ -8,7 +8,7 @@ function BurgerConstructor({products}) {
         <div className={styles.burgerConstructor + ' mt-25'} style={{  }}>
             {products.map((item, index) => {
                 return (index !== 0 && index !== products.length - 1) ? (
-                    <div key={index} className={styles.constructorElement}>
+                    <div key={item._id + index} className={styles.constructorElement}>
                         <div className={styles.dragIcon}>
                             <DragIcon type="primary" />
                         </div>
@@ -21,11 +21,11 @@ function BurgerConstructor({products}) {
                         />
                     </div>
                 ) : (
-                    <div key={index} className={styles.constructorElement}>
+                    <div key={item._id + index} className={styles.constructorElement}>
                         <ConstructorElement
                             type={index === 0 ? "top" : "bottom"}
                             isLocked={true}
-                            text={item.name}
+                            text={index === 0 ? item.name + " (верх)" : item.name + " (низ)"}
                             price={item.price}
                             thumbnail={item.image}
                             extraClass='mb-4'

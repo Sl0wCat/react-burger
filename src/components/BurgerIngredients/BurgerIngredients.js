@@ -52,7 +52,7 @@ function BurgerIngredients({cartProducts}) {
 }
 
 BurgerIngredients.propTypes ={
-  cartProducts: PropTypes.arrayOf(PropTypes.object)
+  cartProducts: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default BurgerIngredients;

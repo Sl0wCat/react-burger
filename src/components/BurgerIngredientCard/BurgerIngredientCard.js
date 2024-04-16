@@ -20,10 +20,10 @@ function BurgerIngredientCard(props) {
 }
 
 BurgerIngredientCard.propTypes ={
-  count: PropTypes.number,
-  img: PropTypes.string,
-  price: PropTypes.number,
-  name: PropTypes.string
+  count: PropTypes.number.isRequired,
+  img: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired
 };
 
 export default BurgerIngredientCard;
