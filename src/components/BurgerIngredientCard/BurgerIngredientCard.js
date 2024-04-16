@@ -8,7 +8,7 @@ function BurgerIngredientCard(props) {
         {props.count > 0 && (
             <Counter count={props.count} size="default" extraClass="m-1" />
         )}
-        <img src={props.img} alt='props.name' />
+        <img src={props.img} alt={props.name} />
         <div className={styles.price} >
             {props.price} <CurrencyIcon type="primary" />
         </div>
