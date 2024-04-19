@@ -4,10 +4,10 @@ import styles from './BurgerIngredients.module.css';
 import BurgerIngredientCard from '../BurgerIngredientCard/BurgerIngredientCard';
 import PropTypes from 'prop-types';
 
-function BurgerIngredients({cartProducts}) {
+function BurgerIngredients({cartProducts, ingredients}) {
   const [current, setCurrent] = React.useState('bun');
 
-  const ingredients = require('../../utils/data.json');
+  
   const tabs = [
     {
         title: 'Булки',
@@ -25,6 +25,7 @@ function BurgerIngredients({cartProducts}) {
 
   const productCount = (product) => {
     const count = cartProducts.filter((item) => item.name === product.name).length;
+    //const count = cartProducts.filter((item) => item === product._id).length;
     return count;
   }
   return (
@@ -42,7 +43,7 @@ function BurgerIngredients({cartProducts}) {
           <section key={item.code}>
             <h2 className='pt-6 pb-10'>{item.title}</h2>
             { ingredients.filter((ingredient) => ingredient.type === item.code).map((item) => (
-              <BurgerIngredientCard name={item.name} img={item.image} price={item.price} count={productCount(item)} key={item._id}/>
+              <BurgerIngredientCard {...item} count={productCount(item)} key={item._id}/>
             )) }
           </section>
         ))}

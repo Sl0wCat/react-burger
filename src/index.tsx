@@ -9,6 +9,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    <div id="modal"></div>
     <App />
   </React.StrictMode>
 );
