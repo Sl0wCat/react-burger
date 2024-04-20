@@ -25,12 +25,17 @@ function App() {
     
     const getProductData = async () => {
       try {
-        const res = await fetch(apiUrl);
-        const apiData = await res.json();
+        const apiData = await fetch(apiUrl)
+        .then(res => {
+            if (res.ok) {  
+                return res.json();  
+            }  
+            return Promise.reject(`Ошибка ${res.status}`);  
+        });
         // data - список продуктов с api
         setData(apiData.data);
         // cartData - список продуктов в корзине
-        let cartData = cartProductIds.map((item) => {
+        const cartData = cartProductIds.map((item) => {
           return apiData.data.find((p) => p._id === item)
         });
         setCartProducts(cartData);
