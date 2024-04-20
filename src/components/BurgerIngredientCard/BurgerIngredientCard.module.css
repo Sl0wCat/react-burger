@@ -1,0 +1,8 @@
+.ingredientCard {
+    width: calc(50% - 32px);
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    position: relative;
+    cursor: pointer;
+}
