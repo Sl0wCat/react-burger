@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDrag } from "react-dnd";
 import { useDispatch, useSelector } from 'react-redux';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,59 +7,62 @@ import PropTypes from 'prop-types';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
+// Хуки
+import { useModal } from '../../hooks/useModal';
+
 // Стили
 import styles from './BurgerIngredientCard.module.css';
 
 // Редьюсеры
 import { setIngredient, cleanIngredient } from '../../services/reducers/burgerIngredient';
 
-function BurgerIngredientCard(props) {
+function BurgerIngredientCard({ingredient}) {
   const dispatch = useDispatch();
 
   const burgerConstructor = useSelector(state => state.burgerConstructor);
 
+  const { isModalOpen, openModal, closeModal } = useModal();
+
   // Количество ингридиента в конструкторе
-  const productCount = (props) => {
-    const count = props.type === "bun" ? 
-      (burgerConstructor.bun && burgerConstructor.bun.name === props.name) ? 2 : 0
-      : burgerConstructor.filling.filter((item) => item.name === props.name).length;
+  const productCount = (ingredient) => {
+    const count = ingredient.type === "bun" ? 
+      (burgerConstructor.bun && burgerConstructor.bun.name === ingredient.name) ? 2 : 0
+      : burgerConstructor.filling.filter((item) => item.name === ingredient.name).length;
 
     return count;
   }
 
-  const [showModal, setShowModal] = React.useState(false);
-
-  const showIngredient = (props) => {
-    dispatch(setIngredient(props));
-    setShowModal(true);
+  const showIngredient = (ingredient) => {
+    dispatch(setIngredient(ingredient));
+    openModal();
   }
 
   const hideIngredient = () => {
     dispatch(cleanIngredient());
-    setShowModal(false);
+    closeModal();
   }
 
   const [, dragRef] = useDrag({
       type: "filling",
-      item: props
+      item: ingredient
   });
 
   return (
     <>
-      <div ref={dragRef} className={styles.ingredientCard + " pr-4 pl-4"}  onClick={() => showIngredient(props)} >
-        {productCount(props) > 0 && (
-            <Counter count={productCount(props)} size="default" extraClass="m-1" />
+      <div ref={dragRef} className={styles.ingredientCard + " pr-4 pl-4"}  onClick={() => showIngredient(ingredient)} >
+        {productCount(ingredient) > 0 && (
+            <Counter count={productCount(ingredient)} size="default" extraClass="m-1" />
         )}
-        <img src={props.image} alt={props.name} />
+        <img src={ingredient.image} alt={ingredient.name} />
         <div className={styles.price} >
-            {props.price} <CurrencyIcon type="primary" />
+            {ingredient.price} <CurrencyIcon type="primary" />
         </div>
         <div className={styles.title}>
-            {props.name}
+            {ingredient.name}
         </div>
         
       </div>
-      {showModal && (
+      {isModalOpen && (
           <Modal header="Детали ингредиента" onClose={() => hideIngredient()}> 
               <IngredientDetails />
           </Modal>
@@ -71,9 +73,7 @@ function BurgerIngredientCard(props) {
 }
 
 BurgerIngredientCard.propTypes ={
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired
+  ingredient: PropTypes.object.isRequired,
 };
 
 export default BurgerIngredientCard;

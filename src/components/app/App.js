@@ -14,7 +14,7 @@ import styles from './App.module.css';
 
 // Редьюсеры
 import { fetchIngredients } from '../../services/reducers/burgerIngredients.js';
-import { addFilling, addBun, countTotal } from '../../services/reducers/burgerConstructor';
+
 
 
 function App() {
@@ -24,15 +24,6 @@ function App() {
     // Получаем ингридиенты с API
     dispatch(fetchIngredients());
   }, [dispatch]);
-
-  // Перетаскивание ингридиента в конструктор бургеров
-  const handleDrop = (item) => {
-    // В зависимости от типа продукта добавляем его в список начинок или ставим булкой
-    item.type === "bun" ? dispatch(addBun(item)) : dispatch(addFilling(item));
-    // Обновляем итоговую стоимость
-    dispatch(countTotal());
-  };
-
 
   return (
     <ErrorBoundary>
@@ -45,11 +36,11 @@ function App() {
                 <BurgerIngredients />
               </section>
               <section className={styles.column}>
-                <BurgerConstructor onDropHandler={handleDrop} />
+                <BurgerConstructor />
               </section>
             </DndProvider>
           </main>
-          <div id="react-notifications"></div>
+          
         </div>
     </ErrorBoundary>
     

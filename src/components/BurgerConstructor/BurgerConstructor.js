@@ -1,20 +1,22 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDrop } from "react-dnd";
 import { useSelector, useDispatch } from 'react-redux';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types';
 
 // Компоненты
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import BurgerConstructorDragElement from '../BurgerConstructorDragElement/BurgerConstructorDragElement';
 
+// Хуки
+import { useModal } from '../../hooks/useModal';
+
 // Стили и т.д.
 import styles from './BurgerConstructor.module.css';
 import noImagePath from '../../images/noImage.png';
 
 // Редьюсеры
-import { reorderFilling } from '../../services/reducers/burgerConstructor';
+import { addFilling, addBun, countTotal, reorderFilling, updateIndex, cleanConstructor } from '../../services/reducers/burgerConstructor';
 import { fetchOrder, cleanOrder } from '../../services/reducers/order';
 
 // Если нет ингридиентов в конструкторе бургера - отображаем заглушку
@@ -33,21 +35,30 @@ const EmptyIngridient = ({text, type = null}) => {
     )
 }
 
-function BurgerConstructor({onDropHandler}) {
+function BurgerConstructor() {
     const dispatch = useDispatch();
     const burgerConstructor = useSelector(state => state.burgerConstructor);
+    const order = useSelector(state => state.order);
+
+    const { isModalOpen, openModal, closeModal } = useModal();
+
+    // Перетаскивание ингридиента в конструктор бургеров
+    const handleDrop = (item) => {
+        // В зависимости от типа продукта добавляем его в список начинок или ставим булкой
+        item.type === "bun" ? dispatch(addBun(item)) : dispatch(addFilling(item));
+        // Обновляем итоговую стоимость
+        dispatch(countTotal());
+    };
 
     const [, dropTarget] = useDrop({
         accept: "filling",
         drop(item) {
-            onDropHandler(item);
+            handleDrop(item);
         },
     });
 
     // Итоговая стоимость корзины
     const total = burgerConstructor.total;
-
-    const [showModal, setShowModal] = React.useState(false);
 
     // Создание заказа и показ модального окна с информацией
     const showOrder = () => {
@@ -58,19 +69,21 @@ function BurgerConstructor({onDropHandler}) {
             burgerConstructor.bun._id,
         ];
         dispatch(fetchOrder({ingredients: ingredients}))
-
-        setShowModal(true);
+        openModal();
+        if (!order.error)
+            dispatch(cleanConstructor());
     }
     
     const hideOrder = () => {
         dispatch(cleanOrder());
-        setShowModal(false);
+        closeModal();
     }
 
     // Перетаскивание ингридиентов внутри конструктора бургера
     const moveCard = useCallback((dragIndex, hoverIndex) => {
         const dragCard = burgerConstructor.filling[dragIndex];
         dispatch(reorderFilling({dragIndex, hoverIndex, dragCard}));
+        dispatch(updateIndex())
     }, [burgerConstructor, dispatch]);
 
     return (
@@ -93,7 +106,7 @@ function BurgerConstructor({onDropHandler}) {
 
             {burgerConstructor.filling.length > 0 ? burgerConstructor.filling.map((item, index) => {
                 return (
-                    <BurgerConstructorDragElement key={item._id + index} item={item} index={index} moveCard={moveCard} />
+                    <BurgerConstructorDragElement key={item.uId} item={item} index={index} moveCard={moveCard} />
                 )
                 })
                 : 
@@ -128,7 +141,7 @@ function BurgerConstructor({onDropHandler}) {
                     Оформить заказ
                 </Button>
             </section>
-            {showModal && (
+            {isModalOpen && (
                 <Modal header="" onClose={() => hideOrder()}> 
                     <OrderDetails />
                 </Modal>
@@ -136,9 +149,5 @@ function BurgerConstructor({onDropHandler}) {
         </div>
     );
 }
-
-BurgerConstructor.propTypes ={
-    onDropHandler: PropTypes.func.isRequired,
-};
 
 export default BurgerConstructor;

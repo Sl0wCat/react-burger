@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import styles from './BurgerConstructorDragElement.module.css';
 
 // Редьюсеры
-import { removeFilling, countTotal } from '../../services/reducers/burgerConstructor';
+import { removeFilling, countTotal, updateIndex } from '../../services/reducers/burgerConstructor';
 
 function BurgerConstructorDragElement({item, index, moveCard}) {
     const dispatch = useDispatch();
@@ -65,6 +65,7 @@ function BurgerConstructorDragElement({item, index, moveCard}) {
 
     const handleClose = (item) => {
         dispatch(removeFilling(item));
+        dispatch(updateIndex())
         dispatch(countTotal());
     }
 

@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <div id="modal"></div>
+    
     <Provider store={store}>
       <App />
     </Provider>

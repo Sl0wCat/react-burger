@@ -64,7 +64,7 @@ function BurgerIngredients() {
             <section key={item.code} id={item.code}>
               <h2 className="pt-6 pb-10">{ item.title }</h2>
               {ingredients.filter((ingredient) => ingredient.type === item.code).map((ingredient) => (
-                <BurgerIngredientCard {...ingredient} key={ingredient._id}/>
+                <BurgerIngredientCard ingredient={ingredient} key={ingredient._id}/>
               ))}
             </section>
 

@@ -1,27 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const apiUrl = "https://norma.nomoreparties.space/api/orders";
+import { request } from '../../utils';
 
 export const fetchOrder = createAsyncThunk("fetchOrder", async (params) => {
-  try {
-    const data = await fetch(apiUrl, {
+    return request("orders", {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json;charset=utf-8'
+            'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(params)
-      })
-      .then(res => {
-        if (res.ok) {  
-            return res.json();  
-        }  
-        return Promise.reject(`Ошибка ${res.status}`);  
     });
-    return data;
-    ;
-  } catch (error) {
-    console.log(error);
-  }
 })
 
 const initialState = {
