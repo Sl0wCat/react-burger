@@ -27,13 +27,3 @@
     height: 40px;
 }
 
-.constructorElement {
-    position: relative;
-}
-
-.dragIcon {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    margin-top: -20px;
-}

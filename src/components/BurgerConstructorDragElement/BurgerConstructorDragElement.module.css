@@ -1,0 +1,11 @@
+.constructorElement {
+    position: relative;
+    cursor: pointer;
+}
+
+.dragIcon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -20px;
+}
