@@ -1,0 +1,50 @@
+.header {
+    background-color: rgb(28,28,33);
+}
+
+.content {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    
+}
+
+.menu {
+    margin-left: -20px;
+    display: flex;
+    align-items: center;
+}
+
+.li {
+    list-style-type: none;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+.link {
+    color: rgb(132,132,173);
+    
+    text-decoration: none;
+    vertical-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -145px;
+    margin-top: -25px;
+}
+
+.active {
+    color: #fff;
+}

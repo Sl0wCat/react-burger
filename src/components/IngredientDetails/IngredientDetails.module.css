@@ -1,0 +1,10 @@
+.ingredientCard {
+    text-align: center;
+    width: 500px;
+    margin: 0 auto;
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+}
