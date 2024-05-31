@@ -1,23 +1,39 @@
-import { Logo, BurgerIcon, ListIcon, Button, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Link, NavLink } from 'react-router-dom';
+import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+
 import styles from './AppHeader.module.css';
+
 
 function AppHeader() {
   return (
-      <header className={styles.header + ' pt-4 pb-4'}>
-        <nav className={styles.menu}>
-            <a href="#" className={styles.link + " pl-5 pr-5 pt-4 pb-4 mr-2"}>
-                <BurgerIcon type="primary" /> <span className="pl-2">Конструктор</span>
-            </a>
-            <a href="#" className={styles.link + " pl-5 pr-5 pt-4 pb-4 mr-2"}>
-                <ListIcon  type="primary" /> <span className="pl-2">Лента заказов</span>
-            </a>
-        </nav>
-        <span className={styles.logo}>
-            <Logo />
-        </span>
-        <Button type="secondary" htmlType="button" size="small" extraClass={'ml-2 text text_type_main-default pl-5 pt-4 pb-4 ' + styles.button}>
-            <ProfileIcon type="primary" /><span className="pl-2">Личный кабинет</span>
-        </Button>
+      <header className={styles.header}>
+        <section className={`${styles.content} pt-4 pb-4`}>
+            <nav className={styles.menu}>
+                <NavLink to='/' className={({isActive}) => isActive ? `${styles.active} ${styles.link} pl-5 pr-5 pt-4 pb-4 mr-2` : `${styles.link} pl-5 pr-5 pt-4 pb-4 mr-2`}>
+                    {({isActive}) => (
+                            isActive ? <><BurgerIcon type='primary' /> <span className={`pl-2 ${styles.active}`} >Конструктор</span></>
+                            : <><BurgerIcon type='secondary' /> <span className='pl-2' >Конструктор</span></>
+                    )}
+                </NavLink>
+                <NavLink to='/orders' className={({isActive}) => isActive ? `${styles.active} ${styles.link} pl-5 pr-5 pt-4 pb-4 mr-2` : `${styles.link} pl-5 pr-5 pt-4 pb-4 mr-2`}>
+                    {({isActive}) => (
+                            isActive ? <><ListIcon  type='primary' /> <span className={`pl-2 ${styles.active}`}>Лента заказов</span></>
+                            : <><ListIcon  type='secondary' /> <span className='pl-2'>Лента заказов</span></>
+                    )}
+                </NavLink>
+
+            </nav>
+            <span className={styles.logo}>
+                <Link to='/'><Logo /></Link>
+            </span>
+            <NavLink to='/profile' className={({isActive}) => isActive ? `${styles.active} ${styles.link}` : styles.link}>
+                {({isActive}) => (
+                        isActive ? <><ProfileIcon type='primary' /><span className='pl-2'>Личный кабинет</span></>
+                        : <><ProfileIcon type='secondary' /><span className='pl-2'>Личный кабинет</span></>
+                )}
+            </NavLink>
+        </section>
+        
       </header>
   );
 }

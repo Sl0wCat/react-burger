@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     item: {
+        id: null,
         name: "",
         image_large: "",
         proteins: 0,

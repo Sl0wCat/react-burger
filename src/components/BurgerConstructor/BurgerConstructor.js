@@ -18,6 +18,7 @@ import noImagePath from '../../images/noImage.png';
 // Редьюсеры
 import { addFilling, addBun, countTotal, reorderFilling, updateIndex, cleanConstructor } from '../../services/reducers/burgerConstructor';
 import { fetchOrder, cleanOrder } from '../../services/reducers/order';
+import { useNavigate } from 'react-router-dom';
 
 // Если нет ингридиентов в конструкторе бургера - отображаем заглушку
 const EmptyIngridient = ({text, type = null}) => {
@@ -37,8 +38,11 @@ const EmptyIngridient = ({text, type = null}) => {
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const burgerConstructor = useSelector(state => state.burgerConstructor);
     const order = useSelector(state => state.order);
+    const user = useSelector(state => state.user.user);
 
     const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -62,6 +66,7 @@ function BurgerConstructor() {
 
     // Создание заказа и показ модального окна с информацией
     const showOrder = () => {
+
         // Список ингридиентов
         const ingredients = [
             burgerConstructor.bun._id,
@@ -135,7 +140,7 @@ function BurgerConstructor() {
                     type="primary"
                     size="large"
                     extraClass="ml-10"
-                    onClick={() => showOrder()}
+                    onClick={() => (!user) ? navigate('/login') : showOrder()}
                     disabled={total === 0 ? true : false}
                 >
                     Оформить заказ

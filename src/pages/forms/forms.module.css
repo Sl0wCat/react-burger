@@ -1,0 +1,18 @@
+.wrapper {
+    width: 480px;
+    margin: 0 auto;
+    text-align: center;
+    height: calc(100vh - 88px);
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+}
+
+.form {
+    width: 480px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+}

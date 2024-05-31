@@ -6,3 +6,8 @@
     position: relative;
     cursor: pointer;
 }
+
+.link {
+    color: #fff;
+    text-decoration: none;
+}
