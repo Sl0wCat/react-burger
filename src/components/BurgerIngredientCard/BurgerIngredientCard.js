@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { Link, useLocation } from "react-router-dom";
+import { getConstructor } from "../../services/store";
 
 // Стили
 import styles from './BurgerIngredientCard.module.css';
 
 function BurgerIngredientCard({ingredient}) {
-  const burgerConstructor = useSelector(state => state.burgerConstructor);
+  const burgerConstructor = useSelector(getConstructor);
 
   // Количество ингридиента в конструкторе
   const productCount = (ingredient) => {

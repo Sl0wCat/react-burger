@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, createSelector } from '@reduxjs/toolkit';
 import { ingredientsSlice } from './reducers/burgerIngredients';
 import { constructorSlice } from './reducers/burgerConstructor';
 import { ingredientSlice } from './reducers/burgerIngredient';
@@ -17,3 +17,16 @@ export const store = configureStore({
     },
     devTools: process.env.NODE_ENV !== 'production',
 })
+
+export const getConstructor = (state) => state.burgerConstructor;
+export const getOrder = (state) => state.order;
+export const getUser = (state) => state.user.user;
+export const getIngredients = (state) => state.ingredients.data;
+export const getAuthChecked = (state) => state.user.isAuthChecked;
+export const getPasswordReset = (state) => state.resetPassword.success;
+export const getPasswordResetSuccess = (state) => state.resetPassword.successReset;
+export const getResetMailSend = (state) => state.resetPassword.resetMailSend;
+export const getLogoutSuccess = (state) => state.user.logoutSuccess;
+
+export const getIngredient = (id) => (state) =>
+    state.ingredients.data.find(item => item._id === id)

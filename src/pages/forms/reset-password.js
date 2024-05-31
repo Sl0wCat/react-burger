@@ -8,6 +8,7 @@ import AppHeader from '../../components/Header/AppHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useState } from 'react';
 import { resetPassword } from '../../services/reducers/resetPassword';
+import { getPasswordResetSuccess, getResetMailSend } from '../../services/store';
 
 export function ResetPasswordPage() {
     const dispatch = useDispatch();
@@ -18,10 +19,10 @@ export function ResetPasswordPage() {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
 
-    const resetSuccess = useSelector(state => state.resetPassword.successReset);
+    const resetSuccess = useSelector(getPasswordResetSuccess);
 
     //Флаг, что на эту страницу перешли с формы восстановления пароля. Если его нет - перенаправляем пользователя туда, откуда он пришел.
-    const resetMailSend = useSelector(state => state.resetPassword.resetMailSend);
+    const resetMailSend = useSelector(getResetMailSend);
 
     let submit = useCallback(
         e => {
@@ -43,7 +44,7 @@ export function ResetPasswordPage() {
         <>
             <AppHeader />
             <div className={styles.wrapper}>
-                <form className={styles.form}>
+                <form className={styles.form} onSubmit={submit}>
                     <h1 className={styles.heading + ' text text_type_main-medium'}>Восстановление пароля</h1>
                     <PasswordInput
                         name={'password'}
@@ -61,7 +62,7 @@ export function ResetPasswordPage() {
                         extraClass='mt-6 mb-6'
                     />
                     
-                    <Button htmlType="button" type="primary" size="medium" onClick={submit} extraClass='mb-6' >
+                    <Button htmlType="submit" type="primary" size="medium" extraClass='mb-6' >
                         Сохранить
                     </Button>
                     <div className="mt-10 text text_type_main-default text_color_inactive">

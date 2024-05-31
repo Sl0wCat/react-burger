@@ -1,4 +1,4 @@
-import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate } from 'react-router-dom';
 import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +9,7 @@ import styles from './forms.module.css';
 import AppHeader from '../../components/Header/AppHeader';
 
 import { forgotPassword } from '../../services/reducers/resetPassword';
+import { getPasswordReset } from '../../services/store';
 
 export function ForgotPasswordPage() {
 
@@ -16,7 +17,7 @@ export function ForgotPasswordPage() {
 
     const [email, setEmail] = useState('');
 
-    const resetSuccess = useSelector(state => state.resetPassword.success);
+    const resetSuccess = useSelector(getPasswordReset);
     
 
     const onChange = e => {
@@ -40,18 +41,18 @@ export function ForgotPasswordPage() {
         <>
             <AppHeader />
             <div className={styles.wrapper}>
-                <form className={styles.form} >
+                <form className={styles.form} onSubmit={submit}>
                     <h1 className={styles.heading + ' text text_type_main-medium'}>Восстановление пароля</h1>
-                    <EmailInput
+                    <Input
                         name={'email'}
+                        type='email'
                         value={email}
                         placeholder='Укажите e-mail'
-                        isIcon={true}
                         extraClass='mt-3 mb-3'
                         onChange={onChange}
                     />
                     
-                    <Button htmlType='button' type='primary' size='medium' onClick={submit} extraClass='mb-6'>
+                    <Button htmlType='submit' type='primary' size='medium' extraClass='mb-6'>
                         Восстановить
                     </Button>
                     <div className='mt-10 text text_type_main-default text_color_inactive'>

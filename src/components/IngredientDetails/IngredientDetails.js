@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux';
 // Стили
 import styles from './IngredientDetails.module.css';
 import { useParams } from 'react-router-dom';
+import { getIngredient } from '../../services/store';
 
 function IngredientDetails() {
 
     const {id} = useParams();
 
-    const ingredient = useSelector(state => state.ingredients.data.find(item => item._id === id));
+    const ingredient = useSelector(getIngredient(id));
 
     return (
         <>
