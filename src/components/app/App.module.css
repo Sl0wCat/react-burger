@@ -1,0 +1,14 @@
+.wrapper {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.main {
+    display: flex;
+    justify-content: space-between;
+}
+
+.column {
+    width: calc(50% - 20px);
+    max-height: calc(100vh - 88px);
+}
