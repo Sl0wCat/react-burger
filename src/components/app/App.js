@@ -1,50 +1,69 @@
-import React, { useEffect } from 'react';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary.js';
+import { Routes, Route, useLocation } from 'react-router-dom';
+
+import { 
+    HomePage,
+    LoginPage,
+    RegisterPage,
+    ForgotPasswordPage,
+    ResetPasswordPage,
+    NotFound404,
+    IngredientPage,
+    ProfilePage,
+    OrdersPage,
+    ProfileForm,
+    LogoutPage,
+    OrdersListPage,
+  } from '../../pages';
+import Modal from '../Modal/Modal';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
+
+import { OnlyAuth, OnlyUnAuth } from '../ProtectedRoute/ProtectedRoute';
 import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
-// Компоненты
-import AppHeader from '../Header/AppHeader';
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients.js';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor.js';
+import { checkUserAuth } from '../../services/reducers/user';
 
-// Стили
-import styles from './App.module.css';
+export function App() {
+    const location = useLocation();
+    const state = location.state;
 
-// Редьюсеры
-import { fetchIngredients } from '../../services/reducers/burgerIngredients.js';
+    let dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(checkUserAuth());
+    }, []);
 
+    return (
+        <>
+            <Routes location={state?.backgroundLocation || location}>
+                <Route index element={<HomePage />}/>
+                <Route path="/login" element={<OnlyUnAuth component={<LoginPage/>} />} />
+                <Route path="/register" element={<OnlyUnAuth component={<RegisterPage/>} />} />
+                <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPasswordPage/>} />} />
+                <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPasswordPage/>} />} />
+                <Route path="/profile" element={<OnlyAuth component={<ProfilePage/>} />} >
+                    <Route index element={<OnlyAuth component={<ProfileForm />} />}/>
+                    <Route path='orders' element={<OnlyAuth component={<OrdersPage/>} />}/>
+                    
+                </Route>
+                <Route path="/logout" element={<LogoutPage/>}/>
+                <Route path="/ingredients/:id" element={<IngredientPage />} />
+                <Route path="/orders" element={<OrdersListPage/>}/>
+                <Route path="*" element={<NotFound404 />} />
+            
+            </Routes>
 
-
-function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // Получаем ингридиенты с API
-    dispatch(fetchIngredients());
-  }, [dispatch]);
-
-  return (
-    <ErrorBoundary>
-        <div className={styles.wrapper + " text text_type_main-default"}>
-          <AppHeader />
-          <main className={styles.main}>
-            <DndProvider backend={HTML5Backend}>
-              <section className={styles.column}>
-                <h1 className='text text_type_main-large pt-10 pb-5'>Соберите бургер</h1>
-                <BurgerIngredients />
-              </section>
-              <section className={styles.column}>
-                <BurgerConstructor />
-              </section>
-            </DndProvider>
-          </main>
-          
-        </div>
-    </ErrorBoundary>
-    
-  );
-
+            {state?.backgroundLocation && (
+                <Routes>
+                    <Route path="/ingredients/:id" element={
+                        <Modal header="Детали ингредиента"> 
+                            <IngredientDetails />
+                        </Modal>
+                    } />
+                </Routes>
+            )}
+        </>
+            
+            
+            
+    )
 }
-export default App;

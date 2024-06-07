@@ -5,11 +5,13 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 // Компоненты
 import BurgerIngredientCard from '../BurgerIngredientCard/BurgerIngredientCard';
 
+import { getIngredients } from '../../services/store';
+
 // Стили
 import styles from './BurgerIngredients.module.css';
 
 function BurgerIngredients() {
-  const ingredients = useSelector(state => state.ingredients.data);
+  const ingredients = useSelector(getIngredients);
 
   const [current, setCurrent] = React.useState('bun');
 
