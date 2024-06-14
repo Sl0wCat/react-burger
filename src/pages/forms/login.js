@@ -1,4 +1,4 @@
-import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useCallback, useState } from 'react';
 
@@ -30,14 +30,14 @@ export function LoginPage() {
         <>
             <AppHeader />
             <div className={styles.wrapper}>
-                <form className={styles.form}>
+                <form className={styles.form} onSubmit={submit}>
                     <h1 className={styles.heading + ' text text_type_main-medium'}>Вход</h1>
-                    <EmailInput
+                    <Input
                         name={'email'}
+                        type='email'
                         value={form.email}
                         onChange={onChange}
                         placeholder="Логин"
-                        isIcon={true}
                         extraClass="pt-3 pb-3"
                     />
                     <PasswordInput
@@ -47,7 +47,7 @@ export function LoginPage() {
                         extraClass="pt-3 pb-3"
                     />
 
-                    <Button htmlType="button" type="primary" size="medium" onClick={submit} extraClass='mb-6'>
+                    <Button htmlType="submit" type="primary" size="medium" extraClass='mb-6'>
                     Войти
                     </Button>
                     <div className="mt-10 text text_type_main-default text_color_inactive">

@@ -2,14 +2,15 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../services/reducers/user";
+import { getLogoutSuccess, getUser } from "../../services/store";
 
 export function LogoutPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const user = useSelector(state => state.user.user);
+    const user = useSelector(getUser);
 
-    const logoutSuccess = useSelector(state => state.user.logoutSuccess);
+    const logoutSuccess = useSelector(getLogoutSuccess);
 
     useEffect(() => {
         if (!user) {

@@ -1,4 +1,4 @@
-import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useCallback, useState } from 'react';
@@ -31,7 +31,7 @@ export function RegisterPage() {
         <>
             <AppHeader />
             <div className={styles.wrapper}>
-                <form className={styles.form}>
+                <form className={styles.form} onSubmit={submit}>
                     <h1 className={styles.heading + ' text text_type_main-medium'}>Регистрация</h1>
                     <Input
                         type={'text'}
@@ -41,10 +41,10 @@ export function RegisterPage() {
                         onChange={onChange}
                         extraClass='mt-6 mb-6'
                     />
-                    <EmailInput 
+                    <Input 
                         name={'email'}
+                        type='email'
                         placeholder='Email'
-                        isIcon={true}
                         value={form.email}
                         onChange={onChange}
                         extraClass='mt-6 mb-6'
@@ -56,7 +56,7 @@ export function RegisterPage() {
                         onChange={onChange}
                     />
 
-                    <Button htmlType="button" type="primary" size="medium" onClick={submit} extraClass='mb-6' >
+                    <Button htmlType="submit" type="primary" size="medium" extraClass='mb-6' >
                         Зарегистрироваться
                     </Button>
                     <div className="mt-10 text text_type_main-default text_color_inactive">

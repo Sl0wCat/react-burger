@@ -5,11 +5,12 @@ import styles from './forms.module.css';
 
 import { update } from '../../services/reducers/user';
 import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from '../../services/store';
 
 export function ProfileForm() {
     const dispatch = useDispatch();
 
-    const user = useSelector(state => state.user.user);
+    const user = useSelector(getUser);
 
     const [form, setValue] = useState({ name: user.name, email: user.email, password: '' });
     const [formChanged, setFormChanged] = useState(false);
@@ -29,7 +30,6 @@ export function ProfileForm() {
 
     let reset = useCallback(
         e => {
-          e.preventDefault();
           setValue({name: user.name, email: user.email, password: ''});
           setFormChanged(false);
         },
@@ -38,7 +38,7 @@ export function ProfileForm() {
 
     return (
 
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={submit}>
             <Input
                 type={'text'}
                 placeholder={'Имя'}
@@ -66,7 +66,7 @@ export function ProfileForm() {
                     <Button htmlType="button" type="secondary" size="medium" onClick={reset}>
                         Отмена
                     </Button>
-                    <Button htmlType="button" type="primary" size="medium" onClick={submit}>
+                    <Button htmlType="submit" type="primary" size="medium">
                         Сохранить
                     </Button>
                 </div>
