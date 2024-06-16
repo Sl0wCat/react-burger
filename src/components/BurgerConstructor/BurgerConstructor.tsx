@@ -1,6 +1,5 @@
-import { useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { useDrop } from "react-dnd";
-import { useSelector, useDispatch } from 'react-redux';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom';
 
@@ -19,17 +18,25 @@ import noImagePath from '../../images/noImage.png';
 // Редьюсеры
 import { addFilling, addBun, countTotal, reorderFilling, updateIndex, cleanConstructor } from '../../services/reducers/burgerConstructor';
 import { fetchOrder, cleanOrder } from '../../services/reducers/order';
-import { getConstructor, getOrder, getUser } from '../../services/store';
+import { getConstructor, getOrder, getUser, useAppDispatch, useAppSelector } from '../../services/store';
+
+//Типы
+import { TIngredient } from '../../utils/types';
+
+interface IEmptyIngredient {
+    text: string;
+    type?: 'top' | 'bottom' | undefined
+}
 
 // Если нет ингридиентов в конструкторе бургера - отображаем заглушку
-const EmptyIngridient = ({text, type = null}) => {
+const EmptyIngridient: FC<IEmptyIngredient> = ({text, type}) => {
     return (
         <div className={styles.constructorElement}>
             <ConstructorElement
                 type={type}
                 isLocked={true}
                 text={text}
-                price="0"
+                price={0}
                 thumbnail={noImagePath}
                 extraClass="mb-4"
             />
@@ -38,17 +45,17 @@ const EmptyIngridient = ({text, type = null}) => {
 }
 
 function BurgerConstructor() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const burgerConstructor = useSelector(getConstructor);
-    const order = useSelector(getOrder);
-    const user = useSelector(getUser);
+    const burgerConstructor = useAppSelector(getConstructor);
+    const order = useAppSelector(getOrder);
+    const user = useAppSelector(getUser);
 
     const { isModalOpen, openModal, closeModal } = useModal();
 
     // Перетаскивание ингридиента в конструктор бургеров
-    const handleDrop = (item) => {
+    const handleDrop = (item: TIngredient) => {
         // В зависимости от типа продукта добавляем его в список начинок или ставим булкой
         item.type === "bun" ? dispatch(addBun(item)) : dispatch(addFilling(item));
         // Обновляем итоговую стоимость
@@ -57,7 +64,7 @@ function BurgerConstructor() {
 
     const [, dropTarget] = useDrop({
         accept: "filling",
-        drop(item) {
+        drop(item: TIngredient) {
             handleDrop(item);
         },
     });
@@ -69,15 +76,18 @@ function BurgerConstructor() {
     const showOrder = () => {
 
         // Список ингридиентов
-        const ingredients = [
+        const ingredients = burgerConstructor.bun ? [
             burgerConstructor.bun._id,
-            ...burgerConstructor.filling.map((item) => item._id),
+            ...burgerConstructor.filling.map((item: TIngredient) => item._id),
             burgerConstructor.bun._id,
-        ];
+        ] : [ ...burgerConstructor.filling.map((item: TIngredient) => item._id) ];
+        
         dispatch(fetchOrder({ingredients: ingredients}))
         openModal();
-        if (!order.error)
+        if (!order.error) {
             dispatch(cleanConstructor());
+        }
+            
     }
     
     const hideOrder = () => {
@@ -86,20 +96,20 @@ function BurgerConstructor() {
     }
 
     // Перетаскивание ингридиентов внутри конструктора бургера
-    const moveCard = useCallback((dragIndex, hoverIndex) => {
+    const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
         const dragCard = burgerConstructor.filling[dragIndex];
         dispatch(reorderFilling({dragIndex, hoverIndex, dragCard}));
         dispatch(updateIndex())
     }, [burgerConstructor, dispatch]);
 
     return (
-        <div ref={dropTarget} className={styles.burgerConstructor + ' mt-25'} >
+        <div ref={dropTarget} className={`${styles.burgerConstructor} mt-25`} >
             { burgerConstructor.bun ? (
                 <div className={styles.constructorElement}>
                     <ConstructorElement
                         type="top"
                         isLocked={true}
-                        text={burgerConstructor.bun.name + " (верх)"}
+                        text={`${burgerConstructor.bun.name} (верх)`}
                         price={burgerConstructor.bun.price}
                         thumbnail={burgerConstructor.bun.image}
                         extraClass="mb-4"
@@ -110,7 +120,7 @@ function BurgerConstructor() {
             ) }
             
 
-            {burgerConstructor.filling.length > 0 ? burgerConstructor.filling.map((item, index) => {
+            {burgerConstructor.filling.length > 0 ? burgerConstructor.filling.map((item: TIngredient, index: number) => {
                 return (
                     <BurgerConstructorDragElement key={item.uId} item={item} index={index} moveCard={moveCard} />
                 )
@@ -123,7 +133,7 @@ function BurgerConstructor() {
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
-                        text={burgerConstructor.bun.name + " (низ)"}
+                        text={`${burgerConstructor.bun.name} (низ)`}
                         price={burgerConstructor.bun.price}
                         thumbnail={burgerConstructor.bun.image}
                         extraClass='mb-4'
@@ -134,7 +144,7 @@ function BurgerConstructor() {
             )}
 
 
-            <section className={styles.total + ' pt-10 text text_type_main-large'}>
+            <section className={`${styles.total} pt-10 text text_type_main-large`}>
                 {total} <span className='pl-2'><CurrencyIcon type="primary" /></span>
                 <Button 
                     htmlType="button"

@@ -1,10 +1,14 @@
-import { useSelector } from 'react-redux';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import styles from './OrderDetails.module.css';
-import { getOrder } from '../../services/store';
+import { FC } from 'react';
 
-function OrderDetails() {
-    const order = useSelector(getOrder);
+// Стили
+import styles from './OrderDetails.module.css';
+
+// Редьюсеры
+import { getOrder, useAppSelector } from '../../services/store';
+
+const OrderDetails: FC = () => {
+    const order = useAppSelector(getOrder);
     return(
         <>
             { order.loading ? (
@@ -20,7 +24,9 @@ function OrderDetails() {
                 </section>
             ) : (
                 <section className={styles.order}>
-                    <div className="text text_type_digits-large pb-8">{order.order.number}</div>
+                    {order.order && (
+                        <div className="text text_type_digits-large pb-8">{order.order.number}</div>
+                    )}
                     <p className="text text_type_main-default pb-15">идентификатор заказа</p>
                     <CheckMarkIcon type="primary" />
                     <p className="text text_type_main-small pt-15 pb-2">Ваш заказ начали готовить</p>

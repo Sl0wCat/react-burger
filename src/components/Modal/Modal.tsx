@@ -1,12 +1,21 @@
-import React, { useCallback } from "react";
+import React, { useCallback, FC } from "react";
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import styles from './Modal.module.css';
 import { useNavigate } from "react-router-dom";
 
-function Modal({ children, header })  {
+// Компоненты
+import ModalOverlay from "../ModalOverlay/ModalOverlay";
+
+// Стили
+import styles from './Modal.module.css';
+
+type TModal = {
+    header: string;
+    onClose?: () => void;
+    children: React.ReactNode
+}
+
+const Modal: FC<TModal> = ({ children, header }) => {
     const modalRoot = document.getElementById("modal");
     let navigate = useNavigate();
 
@@ -15,7 +24,7 @@ function Modal({ children, header })  {
     }, [navigate]);
     
     React.useEffect(() => {
-        const close = (e) => {
+        const close = (e: KeyboardEvent): void => {
           if(e.key === 'Escape'){
             closeModal()
           }
@@ -38,13 +47,8 @@ function Modal({ children, header })  {
                 </div>
             </ModalOverlay>
         ), 
-        modalRoot
+        modalRoot!
     );
-  
-}
-
-Modal.propTypes ={
-    header: PropTypes.string,
 }
 
 export default Modal;

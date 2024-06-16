@@ -1,8 +1,6 @@
-import { useDispatch } from 'react-redux';
-import { useRef } from 'react';
+import { FC, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 
 // Стили
 import styles from './BurgerConstructorDragElement.module.css';
@@ -10,9 +8,24 @@ import styles from './BurgerConstructorDragElement.module.css';
 // Редьюсеры
 import { removeFilling, countTotal, updateIndex } from '../../services/reducers/burgerConstructor';
 
-function BurgerConstructorDragElement({item, index, moveCard}) {
-    const dispatch = useDispatch();
-    const ref = useRef(null);
+// Типы
+import { TIngredient } from '../../utils/types';
+import { useAppDispatch } from '../../services/store';
+
+type TBurgerConstructorDragElement = {
+    item: TIngredient;
+    index: number;
+    moveCard: (dragIndex: number, hoverIndex: number) => void;
+}
+
+type draggableItemIdentifiers = {
+    key: string;
+    index: number;
+  }
+
+const BurgerConstructorDragElement: FC<TBurgerConstructorDragElement> = ({item, index, moveCard}) => {
+    const dispatch = useAppDispatch();
+    const ref = useRef<HTMLDivElement>(null);
 
     const itemId = item._id + index;
 
@@ -27,27 +40,31 @@ function BurgerConstructorDragElement({item, index, moveCard}) {
             if (!ref.current) {
                 return;
             }
-            const dragIndex = item.index;
+            const dragIndex = (item as draggableItemIdentifiers).index;
             const hoverIndex = index;
             if (dragIndex === hoverIndex) {
                 return;
             }
             
-            const hoverBoundingRect = ref.current?.getBoundingClientRect();
-            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            if (!!clientOffset) {
+                const hoverBoundingRect = ref.current?.getBoundingClientRect();
+                const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+                
+                const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-                return;
+                if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                    return;
+                }
+                if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                    return;
+                }
+
+                moveCard(dragIndex, hoverIndex);
+
+                (item as draggableItemIdentifiers).index = hoverIndex;
             }
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-                return;
-            }
-
-            moveCard(dragIndex, hoverIndex);
-
-            item.index = hoverIndex;
+            
         },
     });
 
@@ -63,7 +80,7 @@ function BurgerConstructorDragElement({item, index, moveCard}) {
     const opacity = isDragging ? 0.5 : 1;
     
 
-    const handleClose = (item) => {
+    const handleClose = (item: TIngredient) => {
         dispatch(removeFilling(item));
         dispatch(updateIndex())
         dispatch(countTotal());
@@ -88,10 +105,5 @@ function BurgerConstructorDragElement({item, index, moveCard}) {
     );
 }
 
-BurgerConstructorDragElement.propTypes = {
-    item: PropTypes.object.isRequired, 
-    index: PropTypes.number.isRequired, 
-    moveCard: PropTypes.func.isRequired,
-};
 
 export default BurgerConstructorDragElement;

@@ -15,14 +15,14 @@ export const ingredientsSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(fetchIngredients.pending, (state, action) => {
+    builder.addCase(fetchIngredients.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(fetchIngredients.fulfilled, (state, action) => {
       state.loading = false;
       state.data = action.payload.data;
     });
-    builder.addCase(fetchIngredients.rejected, (state, action) => {
+    builder.addCase(fetchIngredients.rejected, (state) => {
       state.loading = false;
       state.error = true;
     });
