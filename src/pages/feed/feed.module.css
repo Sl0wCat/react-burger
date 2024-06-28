@@ -1,0 +1,38 @@
+.wrapper {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.main {
+    display: flex;
+    justify-content: space-between;
+}
+
+.column {
+    width: calc(50% - 20px);
+    max-height: calc(100vh - 256px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.columnMin {
+    width: calc(50% - 10px);
+}
+
+.column::-webkit-scrollbar {
+    width: 8px;
+    background-color: #2F2F37;
+}
+
+.column::-webkit-scrollbar-thumb {
+    background-color: #8585AD
+}
+
+.title {
+    width: calc(100%);
+    display: block;
+}
+
+.green {
+    color: #00cccc;
+}

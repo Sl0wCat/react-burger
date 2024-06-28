@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC, ReactElement, useCallback } from 'react';
 import { useDrop } from "react-dnd";
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom';
@@ -44,7 +44,7 @@ const EmptyIngridient: FC<IEmptyIngredient> = ({text, type}) => {
     )
 }
 
-function BurgerConstructor() {
+const BurgerConstructor: FC = (): ReactElement => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 

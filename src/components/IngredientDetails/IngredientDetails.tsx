@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { FC } from 'react';
+import { FC, ReactElement } from 'react';
 
 // Стили
 import styles from './IngredientDetails.module.css';
@@ -10,7 +10,7 @@ import { NotFound404 } from '../../pages';
 // Редьюсеры
 import { getIngredient, useAppSelector } from '../../services/store';
 
-const IngredientDetails: FC = () => {
+const IngredientDetails: FC = (): ReactElement => {
 
     const {id} = useParams();
 

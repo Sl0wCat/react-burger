@@ -1,17 +1,22 @@
-import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
-import { getAuthChecked, getUser } from "../../services/store";
+import { getAuthChecked, getUser, useAppSelector } from "../../services/store";
+import { FC, ReactElement } from "react";
 
-const Protected = ({ onlyUnAuth = false, component }) => {
+interface IProtected {
+  onlyUnAuth: boolean,
+  component: JSX.Element
+}
+
+const Protected: FC<IProtected> = ({ onlyUnAuth, component }): ReactElement => {
   // isAuthChecked это флаг, показывающий что проверка токена произведена
-  const isAuthChecked = useSelector(getAuthChecked);
-  const user = useSelector(getUser);
+  const isAuthChecked = useAppSelector(getAuthChecked);
+  const user = useAppSelector(getUser);
   const location = useLocation();
 
   if (!isAuthChecked) {
     // Запрос еще выполняется
     // Выводим прелоадер в ПР
-    return 'loading...';
+    return <p>loading...</p>;
   }
 
   if (onlyUnAuth && user) {
@@ -28,7 +33,4 @@ const Protected = ({ onlyUnAuth = false, component }) => {
   return component;
 };
 
-export const OnlyAuth = Protected;
-export const OnlyUnAuth = ({ component }) => (
-  <Protected onlyUnAuth={true} component={component} />
-);
+export default Protected;

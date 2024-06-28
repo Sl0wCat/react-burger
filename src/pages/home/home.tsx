@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, ReactElement, useEffect } from 'react';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -11,18 +11,18 @@ import BurgerConstructor from '../../components/BurgerConstructor/BurgerConstruc
 import styles from './home.module.css';
 
 // Редьюсеры
-import { fetchIngredients } from '../../services/reducers/burgerIngredients.js';
+import { fetchIngredients } from '../../services/reducers/burgerIngredients';
 import { useAppDispatch } from '../../services/store';
 
 
 
-export const HomePage: FC = () => {
+export const HomePage: FC = (): ReactElement => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     // Получаем ингридиенты с API
     dispatch(fetchIngredients());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

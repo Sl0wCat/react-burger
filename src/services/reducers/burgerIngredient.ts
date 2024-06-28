@@ -21,7 +21,7 @@ export const ingredientSlice = createSlice({
             state.item = action.payload
         },
         cleanIngredient: (state) => {
-            state.item = initialState
+            state.item = initialState.item
         }
       },
 });

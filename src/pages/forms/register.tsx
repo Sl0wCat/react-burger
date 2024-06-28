@@ -1,6 +1,6 @@
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { FC, useCallback } from 'react';
+import { FC, ReactElement } from 'react';
 
 import styles from './forms.module.css';
 
@@ -17,18 +17,15 @@ type TRegisterForm = {
     password: string;
 }
 
-export const RegisterPage: FC = () => {
+export const RegisterPage: FC = (): ReactElement => {
     const dispatch = useAppDispatch();
 
     const { values, handleChange } = useForm<TRegisterForm>({name: '', email: '', password: ''});
 
-    let submit = useCallback(
-        (e: React.FormEvent<HTMLFormElement>) => {
-          e.preventDefault();
-          dispatch(register(values))
-        },
-        [dispatch, values]
-    );
+    let submit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        dispatch(register(values))
+    }
 
     return (
         <>

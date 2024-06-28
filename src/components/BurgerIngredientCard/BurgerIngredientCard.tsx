@@ -1,7 +1,7 @@
 import { useDrag } from "react-dnd";
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation } from "react-router-dom";
-import { FC } from "react";
+import { FC, ReactElement } from "react";
 
 // Редьюсеры
 import { getConstructor, useAppSelector } from "../../services/store";
@@ -16,7 +16,7 @@ type TBurgerIngredientCard = {
   ingredient: TIngredient,
 }
 
-const BurgerIngredientCard: FC<TBurgerIngredientCard> = ({ingredient}) => {
+const BurgerIngredientCard: FC<TBurgerIngredientCard> = ({ingredient}): ReactElement => {
   const burgerConstructor = useAppSelector(getConstructor);
 
   // Количество ингридиента в конструкторе
