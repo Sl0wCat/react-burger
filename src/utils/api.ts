@@ -35,13 +35,26 @@ export const login = (params: ILoginForm) =>
     
 
 export const register = (params: ILoginForm) => 
-      requestWithRefresh('auth/register', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json;charset=utf-8'
-          },
-          body: JSON.stringify(params)
-      })
+    requestWithRefresh('auth/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(params)
+})
+
+export const update = (params: TUser) => {
+    const token = localStorage.getItem('accessToken');
+    return requestWithRefresh('auth/user', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            'Authorization': token!
+        },
+        body: JSON.stringify(params)
+    })
+}
+
 
 export const updateUser = (params: TUser): Promise<TResponseBody<TUser>> => {
     const token = localStorage.getItem('accessToken');
@@ -79,6 +92,7 @@ export const logout = () =>
     getUser,
     login,
     register,
+    update,
     updateUser,
     logout
   };

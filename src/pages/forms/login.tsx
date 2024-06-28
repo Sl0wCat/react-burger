@@ -1,6 +1,6 @@
 import { PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { FC, useCallback } from 'react';
+import { FC, ReactElement } from 'react';
 
 // Стили
 import styles from './forms.module.css';
@@ -13,18 +13,16 @@ import { ILoginForm, login } from '../../services/reducers/user';
 import { useAppDispatch } from '../../services/store';
 import useForm from '../../hooks/useForm';
 
-export const LoginPage: FC = () => {
+export const LoginPage: FC = (): ReactElement => {
     const dispatch = useAppDispatch();
 
     const { values, handleChange } = useForm<ILoginForm>({email: '', password: ''});
 
-    let submit = useCallback(
-        (e: React.FormEvent<HTMLFormElement>) => {
-          e.preventDefault();
-          dispatch(login(values))
-        },
-        [dispatch, values]
-    );
+    let submit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        dispatch(login(values))
+    }
+
     return (
         <>
             <AppHeader />
@@ -40,12 +38,14 @@ export const LoginPage: FC = () => {
                         onChange={handleChange}
                         placeholder="Логин"
                         extraClass="pt-3 pb-3"
+                        autoComplete='email'
                     />
                     <PasswordInput
                         name={'password'}
                         value={values.password}
                         onChange={handleChange}
                         extraClass="pt-3 pb-3"
+                        autoComplete='current-password'
                     />
 
                     <Button htmlType="submit" type="primary" size="medium" extraClass='mb-6'>

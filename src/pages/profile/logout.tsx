@@ -1,11 +1,11 @@
-import { FC, useEffect, useState } from "react";
+import { FC, ReactElement, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
 // Редьюсеры
 import { logout } from "../../services/reducers/user";
 import { getLogoutSuccess, getUser, useAppDispatch, useAppSelector } from "../../services/store";
 
-export const LogoutPage: FC = () => {
+export const LogoutPage: FC = (): ReactElement => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 

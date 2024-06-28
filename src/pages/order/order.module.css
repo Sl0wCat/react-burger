@@ -1,0 +1,13 @@
+.wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    height: calc(100vh - 88px);
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orderWrapper {
+    width: 800px;
+}

@@ -5,7 +5,7 @@ import styles from './forms.module.css';
 
 // Компоненты
 import AppHeader from '../../components/Header/AppHeader';
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 import { IResetPasswordForm, resetPassword } from '../../services/reducers/resetPassword';
 import { getPasswordResetSuccess, getResetMailSend, useAppDispatch, useAppSelector } from '../../services/store';
 import useForm from '../../hooks/useForm';
@@ -20,13 +20,10 @@ export const ResetPasswordPage: FC = () => {
     //Флаг, что на эту страницу перешли с формы восстановления пароля. Если его нет - перенаправляем пользователя туда, откуда он пришел.
     const resetMailSend = useAppSelector(getResetMailSend);
 
-    let submit = useCallback(
-        (e: React.FormEvent<HTMLFormElement>) => {
-          e.preventDefault();
-          dispatch(resetPassword(values));
-        },
-        [dispatch, values]
-    );
+    let submit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        dispatch(resetPassword(values));
+    }
 
     if (!resetMailSend)
         return <Navigate to={'/'} />;

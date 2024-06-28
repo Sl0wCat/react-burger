@@ -1,5 +1,5 @@
 import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FC, useCallback, useState } from 'react';
+import { FC, ReactElement, useState } from 'react';
 
 import styles from './forms.module.css';
 
@@ -9,7 +9,7 @@ import { TUser } from '../../utils/types';
 import useForm from '../../hooks/useForm';
 
 
-export const ProfileForm: FC = () => {
+export const ProfileForm: FC = (): ReactElement => {
     const dispatch = useAppDispatch();
 
     const user = useAppSelector(getUser);
@@ -23,22 +23,16 @@ export const ProfileForm: FC = () => {
         setFormChanged(user ? (user.name !== values.name || user.email !== values.email ) : false)
     };
 
-    let submit = useCallback(
-        (e: React.FormEvent<HTMLFormElement>) => {
-          e.preventDefault();
-          // @ts-ignore
-          dispatch(update(values))
-        },
-        [dispatch, values]
-    );
+    let submit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        
+        dispatch(update(values))
+    }
 
-    let reset = useCallback(
-        () => {
-          setValues(!!user ? {name: user.name, email: user.email, password: ''} : {name: '', email: '', password: ''});
-          setFormChanged(false);
-        },
-        [user, setValues]
-    );
+    let reset = () => {
+        setValues(!!user ? {name: user.name, email: user.email, password: ''} : {name: '', email: '', password: ''});
+        setFormChanged(false);
+    }
 
     return (
 

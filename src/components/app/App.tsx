@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, FC } from 'react';
+import { useEffect, FC, ReactElement } from 'react';
 
 import { 
     HomePage,
@@ -13,20 +13,22 @@ import {
     OrdersPage,
     ProfileForm,
     LogoutPage,
-    OrdersListPage,
+    FeedPage,
+    OrderPage,
   } from '../../pages';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import Protected from '../ProtectedRoute/ProtectedRoute';
+import Protected from '../ProtectRoute/ProtectRoute';
 
 import { checkUserAuth } from '../../services/reducers/user';
 import { useAppDispatch } from '../../services/store';
+import OrderInfo from '../OrderInfo/OrderInfo';
 
 interface LocationState {
     backgroundLocation?: string;
 }
 
-export const App: FC = () => {
+export const App: FC = (): ReactElement => {
   
   const location = useLocation();
   const state = location.state as LocationState;
@@ -34,12 +36,14 @@ export const App: FC = () => {
   let dispatch = useAppDispatch();
   useEffect(() => {
       dispatch(checkUserAuth());
-  }, []);
+  }, [dispatch]);
 
   return (
       <>
           <Routes location={state?.backgroundLocation || location}>
               <Route index element={<HomePage />}/>
+              
+              
               <Route path="/login" element={<Protected onlyUnAuth component={<LoginPage/>} />} />
               <Route path="/register" element={<Protected onlyUnAuth component={<RegisterPage/>} />} />
               <Route path="/forgot-password" element={<Protected onlyUnAuth component={<ForgotPasswordPage/>} />} />
@@ -49,9 +53,13 @@ export const App: FC = () => {
                   <Route path='orders' element={<Protected onlyUnAuth={false} component={<OrdersPage/>} />}/>
                   
               </Route>
+              <Route path='/profile/orders/:number' element={<Protected onlyUnAuth={false} component={<OrderPage/>} />}/>
+              
               <Route path="/logout" element={<LogoutPage/>}/>
               <Route path="/ingredients/:id" element={<IngredientPage />} />
-              <Route path="/orders" element={<OrdersListPage/>}/>
+              <Route path="/feed" element={<FeedPage/>}/>
+              <Route path="/feed/:number" element={<OrderPage/>}/>
+
               <Route path="*" element={<NotFound404 />} />
           
           </Routes>
@@ -61,6 +69,16 @@ export const App: FC = () => {
                   <Route path="/ingredients/:id" element={
                       <Modal header="Детали ингредиента"> 
                           <IngredientDetails />
+                      </Modal>
+                  } />
+                  <Route path="/feed/:number" element={
+                      <Modal> 
+                          <OrderInfo />
+                      </Modal>
+                  } />
+                  <Route path="/profile/orders/:number" element={
+                      <Modal> 
+                          <OrderInfo />
                       </Modal>
                   } />
               </Routes>

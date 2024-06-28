@@ -1,4 +1,4 @@
-import React, { useCallback, FC } from "react";
+import React, { useCallback, FC, ReactElement } from "react";
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from "react-router-dom";
@@ -10,12 +10,12 @@ import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import styles from './Modal.module.css';
 
 type TModal = {
-    header: string;
+    header?: string;
     onClose?: () => void;
     children: React.ReactNode
 }
 
-const Modal: FC<TModal> = ({ children, header }) => {
+const Modal: FC<TModal> = ({ children, header = null }): ReactElement => {
     const modalRoot = document.getElementById("modal");
     let navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const Modal: FC<TModal> = ({ children, header }) => {
             <ModalOverlay onClose={closeModal}>
                 <div className={styles.modalContent + " pt-10 pr-10 pb-15 pl-10"} onClick={e => e.stopPropagation()}>
                     <h1 className={styles.modalTitle + " text text_type_main-large"}>
-                        {header}
+                        {header && header}
                         <span className={styles.closeButton}>
                             <CloseIcon onClick={closeModal} type="primary" />
                         </span>

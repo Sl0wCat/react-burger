@@ -7,6 +7,12 @@
     align-items: center;
 }
 
+.innerWrapper {
+    height: calc(100vh - 288px);
+    min-height: 400px;
+    overflow-y: auto;
+}
+
 .main {
     display: flex;
     justify-content: space-between;

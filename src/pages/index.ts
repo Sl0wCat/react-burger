@@ -9,7 +9,8 @@ import { ProfilePage } from './profile/profile';
 import { OrdersPage } from './profile/orders';
 import { ProfileForm } from './forms/profile';
 import { LogoutPage } from './profile/logout';
-import { OrdersListPage } from './orders/orders';
+import { FeedPage } from './feed/feed';
+import { OrderPage } from './order/order';
 
 export { 
     NotFound404,
@@ -23,5 +24,6 @@ export {
     OrdersPage,
     ProfileForm,
     LogoutPage,
-    OrdersListPage,
+    FeedPage,
+    OrderPage,
 };

@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 import { api } from '../../utils/api';
 import { TUser } from '../../utils/types';
-import { TThunkAPI } from '../store';
 
 export interface ILoginForm {
     email: string,
@@ -43,10 +42,10 @@ interface IUpdate {
     message?: string
 }
 
-export const update = createAsyncThunk<IUpdate, TUser, TThunkAPI>(
+export const update = createAsyncThunk<IUpdate, TUser>(
     "update",
     async (params) => {
-        const res = await api.updateUser(params);
+        const res = await api.update(params);
         return res;
     }
 );
