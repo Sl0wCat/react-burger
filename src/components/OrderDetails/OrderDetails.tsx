@@ -1,5 +1,5 @@
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { FC } from 'react';
+import { FC, ReactElement } from 'react';
 
 // Стили
 import styles from './OrderDetails.module.css';
@@ -7,7 +7,7 @@ import styles from './OrderDetails.module.css';
 // Редьюсеры
 import { getOrder, useAppSelector } from '../../services/store';
 
-const OrderDetails: FC = () => {
+const OrderDetails: FC = (): ReactElement => {
     const order = useAppSelector(getOrder);
     return(
         <>

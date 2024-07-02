@@ -1,0 +1,31 @@
+.elementWrapper {
+    border-radius: 20px;
+    background-color: #1c1c21;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ingredientsWrapper {
+    display: flex;
+    margin-left: 20px;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 50px;
+}
+
+.ingredients {
+    display: flex;
+}
+
+.link {
+    color: #fff;
+    text-decoration: none;
+}
+
+.green {
+    color: #00cccc;
+}

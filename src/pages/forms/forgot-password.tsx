@@ -1,6 +1,6 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate } from 'react-router-dom';
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, ReactElement, useState } from 'react';
 
 // Стили
 import styles from './forms.module.css';
@@ -12,7 +12,7 @@ import AppHeader from '../../components/Header/AppHeader';
 import { forgotPassword } from '../../services/reducers/resetPassword';
 import { getPasswordReset, useAppDispatch, useAppSelector } from '../../services/store';
 
-export const ForgotPasswordPage: FC = () => {
+export const ForgotPasswordPage: FC = (): ReactElement => {
 
     const dispatch = useAppDispatch();
 
@@ -20,14 +20,11 @@ export const ForgotPasswordPage: FC = () => {
 
     const resetSuccess = useAppSelector(getPasswordReset);
 
-    let submit = useCallback(
-        (e: React.FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
-            dispatch(forgotPassword({email: email}));
-        },
-        [dispatch, email]
-    );
-    
+    let submit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        dispatch(forgotPassword({email: email}));
+    }
+
     if (resetSuccess) {
         return <Navigate to={'/reset-password'} />;
     }
@@ -48,6 +45,7 @@ export const ForgotPasswordPage: FC = () => {
                         placeholder='Укажите e-mail'
                         extraClass='mt-3 mb-3'
                         onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setEmail(e.currentTarget.value)}
+                        autoComplete='email'
                     />
                     
                     <Button htmlType='submit' type='primary' size='medium' extraClass='mb-6'>

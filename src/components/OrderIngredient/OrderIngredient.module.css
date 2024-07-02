@@ -1,0 +1,66 @@
+.wrapper {
+
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    background: rgb(58, 2, 95);
+    background: linear-gradient(90deg, rgb(85, 1, 141) 0%, rgb(146, 4, 113) 50%, rgb(154, 2, 113) 100%);
+    
+}
+
+.wrapperMarginLeft {
+    margin-left: -20px;
+}
+
+.wrapperMarginRight {
+    margin-right: 20px;
+}
+
+.innerWrapper {
+    height: 44px;
+    width: 44px;
+    border-radius: 22px;
+    max-width: 44px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+    background-color: #000;
+}
+
+.image {
+    
+    height: 44px;
+    margin-left: -22px;
+}
+
+.text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    line-height: 44px;
+    background: rgba(0,0,0,.3);
+    color: #fff;
+}
+
+.rowWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.subrowWrapper {
+    display: flex;
+    align-items: center;
+}

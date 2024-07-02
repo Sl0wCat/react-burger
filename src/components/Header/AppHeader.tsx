@@ -1,10 +1,10 @@
 import { Link, NavLink } from 'react-router-dom';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { FC } from 'react';
+import { FC, ReactElement } from 'react';
 
 import styles from './AppHeader.module.css';
 
-const AppHeader: FC = () => {
+const AppHeader: FC = (): ReactElement => {
   return (
       <header className={styles.header}>
         <section className={`${styles.content} pt-4 pb-4`}>
@@ -15,7 +15,7 @@ const AppHeader: FC = () => {
                             : <><BurgerIcon type='secondary' /> <span className='pl-2' >Конструктор</span></>
                     )}
                 </NavLink>
-                <NavLink to='/orders' className={({isActive}) => isActive ? `${styles.active} ${styles.link} pl-5 pr-5 pt-4 pb-4 mr-2` : `${styles.link} pl-5 pr-5 pt-4 pb-4 mr-2`}>
+                <NavLink to='/feed' className={({isActive}) => isActive ? `${styles.active} ${styles.link} pl-5 pr-5 pt-4 pb-4 mr-2` : `${styles.link} pl-5 pr-5 pt-4 pb-4 mr-2`}>
                     {({isActive}) => (
                             isActive ? <><ListIcon  type='primary' /> <span className={`pl-2 ${styles.active}`}>Лента заказов</span></>
                             : <><ListIcon  type='secondary' /> <span className='pl-2'>Лента заказов</span></>
