@@ -1,6 +1,6 @@
 import { PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { FC, ReactElement } from 'react';
+import { FC } from 'react';
 
 // Стили
 import styles from './forms.module.css';
@@ -10,11 +10,14 @@ import AppHeader from '../../components/Header/AppHeader';
 
 // Редьюсеры
 import { ILoginForm, login } from '../../services/reducers/user';
-import { useAppDispatch } from '../../services/store';
+import { getLoginError, useAppDispatch, useAppSelector } from '../../services/store';
 import useForm from '../../hooks/useForm';
 
-export const LoginPage: FC = (): ReactElement => {
+export const LoginPage: FC = () => {
     const dispatch = useAppDispatch();
+
+    const error = useAppSelector(getLoginError);
+    
 
     const { values, handleChange } = useForm<ILoginForm>({email: '', password: ''});
 

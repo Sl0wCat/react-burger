@@ -1,6 +1,6 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate } from 'react-router-dom';
-import React, { FC, ReactElement, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 // Стили
 import styles from './forms.module.css';
@@ -12,7 +12,7 @@ import AppHeader from '../../components/Header/AppHeader';
 import { forgotPassword } from '../../services/reducers/resetPassword';
 import { getPasswordReset, useAppDispatch, useAppSelector } from '../../services/store';
 
-export const ForgotPasswordPage: FC = (): ReactElement => {
+export const ForgotPasswordPage: FC = () => {
 
     const dispatch = useAppDispatch();
 

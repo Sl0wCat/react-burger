@@ -8,7 +8,7 @@ interface IBurgerConstructor {
     total: number
 }
 
-const initialState: IBurgerConstructor = {
+export const initialState: IBurgerConstructor = {
     bun: null,
     filling: [],
     total: 0,

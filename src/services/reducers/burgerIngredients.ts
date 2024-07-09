@@ -16,7 +16,7 @@ interface IBurgerIngredients {
   };
 }
 
-const initialState: IBurgerIngredients = {
+export const initialState: IBurgerIngredients = {
   loading: false,
   data: [],
   error: false,

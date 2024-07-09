@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -16,7 +16,7 @@ import { useAppDispatch } from '../../services/store';
 
 
 
-export const HomePage: FC = (): ReactElement => {
+export const HomePage: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {

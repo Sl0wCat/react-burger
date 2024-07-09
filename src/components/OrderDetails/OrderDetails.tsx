@@ -1,5 +1,5 @@
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { FC, ReactElement } from 'react';
+import { FC } from 'react';
 
 // Стили
 import styles from './OrderDetails.module.css';
@@ -7,7 +7,7 @@ import styles from './OrderDetails.module.css';
 // Редьюсеры
 import { getOrder, useAppSelector } from '../../services/store';
 
-const OrderDetails: FC = (): ReactElement => {
+const OrderDetails: FC = () => {
     const order = useAppSelector(getOrder);
     return(
         <>
@@ -25,7 +25,7 @@ const OrderDetails: FC = (): ReactElement => {
             ) : (
                 <section className={styles.order}>
                     {order.order && (
-                        <div className="text text_type_digits-large pb-8">{order.order.number}</div>
+                        <div className="text text_type_digits-large pb-8" data-testid="order-number">{order.order.number}</div>
                     )}
                     <p className="text text_type_main-default pb-15">идентификатор заказа</p>
                     <CheckMarkIcon type="primary" />

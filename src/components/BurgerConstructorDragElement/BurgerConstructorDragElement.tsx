@@ -1,4 +1,4 @@
-import { FC, ReactElement, useRef } from 'react';
+import { FC, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -23,7 +23,7 @@ type draggableItemIdentifiers = {
     index: number;
   }
 
-const BurgerConstructorDragElement: FC<TBurgerConstructorDragElement> = ({item, index, moveCard}): ReactElement => {
+const BurgerConstructorDragElement: FC<TBurgerConstructorDragElement> = ({item, index, moveCard}) => {
     const dispatch = useAppDispatch();
     const ref = useRef<HTMLDivElement>(null);
 

@@ -1,4 +1,4 @@
-import { FC, ReactElement, useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { useDrop } from "react-dnd";
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom';
@@ -44,7 +44,7 @@ const EmptyIngridient: FC<IEmptyIngredient> = ({text, type}) => {
     )
 }
 
-const BurgerConstructor: FC = (): ReactElement => {
+const BurgerConstructor: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -103,7 +103,7 @@ const BurgerConstructor: FC = (): ReactElement => {
     }, [burgerConstructor, dispatch]);
 
     return (
-        <div ref={dropTarget} className={`${styles.burgerConstructor} mt-25`} >
+        <div ref={dropTarget} data-testid='drop-target' className={`${styles.burgerConstructor} mt-25`} >
             { burgerConstructor.bun ? (
                 <div className={styles.constructorElement}>
                     <ConstructorElement
@@ -153,8 +153,9 @@ const BurgerConstructor: FC = (): ReactElement => {
                     extraClass="ml-10"
                     onClick={() => (!user) ? navigate('/login') : showOrder()}
                     disabled={total === 0 ? true : false}
+                    data-testid='order-button'
                 >
-                    Оформить заказ
+                    <span >Оформить заказ</span>
                 </Button>
             </section>
             {isModalOpen && (

@@ -1,13 +1,13 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { getAuthChecked, getUser, useAppSelector } from "../../services/store";
-import { FC, ReactElement } from "react";
+import { FC } from "react";
 
 interface IProtected {
   onlyUnAuth: boolean,
   component: JSX.Element
 }
 
-const Protected: FC<IProtected> = ({ onlyUnAuth, component }): ReactElement => {
+const Protected: FC<IProtected> = ({ onlyUnAuth, component }) => {
   // isAuthChecked это флаг, показывающий что проверка токена произведена
   const isAuthChecked = useAppSelector(getAuthChecked);
   const user = useAppSelector(getUser);

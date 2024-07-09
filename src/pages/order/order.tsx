@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 
 // Компоненты
 import OrderInfo from '../../components/OrderInfo/OrderInfo';
@@ -11,7 +11,7 @@ import { fetchIngredients } from '../../services/reducers/burgerIngredients';
 import { getIngredients, useAppDispatch, useAppSelector } from '../../services/store';
 import AppHeader from '../../components/Header/AppHeader';
 
-export const OrderPage: FC = (): ReactElement => {
+export const OrderPage: FC = () => {
 
     const dispatch = useAppDispatch();
 

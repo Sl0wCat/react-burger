@@ -13,7 +13,7 @@ export interface IFeedState {
   connectionError: string | null;
 }
  
-const initialState: IFeedState = {
+export const initialState: IFeedState = {
   isEstablishingConnection: false,
   isConnecting: false,
   isConnected: false,

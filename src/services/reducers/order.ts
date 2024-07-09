@@ -53,7 +53,7 @@ interface IOrder {
     orderInfoError: boolean,
 }
 
-const initialState: IOrder = {
+export const initialState: IOrder = {
     loading: false,
     order: null,
     error: false,
