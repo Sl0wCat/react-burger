@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 // Компоненты
@@ -13,7 +13,7 @@ import styles from './BurgerIngredients.module.css';
 //Типы
 import { TIngredient } from '../../utils/types';
 
-const BurgerIngredients: FC = (): ReactElement => {
+const BurgerIngredients: FC = () => {
   const ingredients = useAppSelector(getIngredients);
 
   const [current, setCurrent] = React.useState('bun');

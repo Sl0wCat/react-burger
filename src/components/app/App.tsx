@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, FC, ReactElement } from 'react';
+import { useEffect, FC } from 'react';
 
 import { 
     HomePage,
@@ -28,7 +28,7 @@ interface LocationState {
     backgroundLocation?: string;
 }
 
-export const App: FC = (): ReactElement => {
+export const App: FC = () => {
   
   const location = useLocation();
   const state = location.state as LocationState;

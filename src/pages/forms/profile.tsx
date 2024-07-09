@@ -1,5 +1,5 @@
 import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FC, ReactElement, useState } from 'react';
+import { FC, useState } from 'react';
 
 import styles from './forms.module.css';
 
@@ -9,7 +9,7 @@ import { TUser } from '../../utils/types';
 import useForm from '../../hooks/useForm';
 
 
-export const ProfileForm: FC = (): ReactElement => {
+export const ProfileForm: FC = () => {
     const dispatch = useAppDispatch();
 
     const user = useAppSelector(getUser);

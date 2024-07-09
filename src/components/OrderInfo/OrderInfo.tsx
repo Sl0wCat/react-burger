@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { FC, ReactElement } from 'react';
+import { FC } from 'react';
 
 // Компоненты
 import OrderIngredient from '../OrderIngredient/OrderIngredient';
@@ -10,12 +10,11 @@ import styles from './OrderInfo.module.css';
 // Редьюсеры, типы
 import { getOrderInfo, getOrderInfoError, getOrderInfoFetching, getOrderIngredients, useAppDispatch, useAppSelector } from '../../services/store';
 import { fetchOrderInfo } from '../../services/reducers/order';
-import { TIngredient, orderStatus, orderStatusText } from '../../utils/types';
+import { orderStatus, orderStatusText } from '../../utils/types';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const OrderInfo: FC = (): ReactElement => {
+const OrderInfo: FC = () => {
     const {number} = useParams();
-    console.log(number);
 
     const dispatch = useAppDispatch();
 
@@ -45,7 +44,7 @@ const OrderInfo: FC = (): ReactElement => {
                     {
                         orderIngredients && Object.entries(orderIngredients).map((ingredient, index) => {
                             return (
-                                <OrderIngredient ingredient={ingredient[1] as TIngredient} mini={false} key={index}/>
+                                <OrderIngredient ingredient={ingredient[1]} mini={false} key={index}/>
                             )
                         })
                     }

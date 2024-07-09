@@ -48,7 +48,7 @@ interface IResetPassword {
     resetMailSend: boolean,
 }
 
-const initialState: IResetPassword = {
+export const initialState: IResetPassword = {
     loading: false,
     error: false,
     success: false,

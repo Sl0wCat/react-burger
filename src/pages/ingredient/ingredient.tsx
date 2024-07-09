@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 
 // Компоненты
 import AppHeader from '../../components/Header/AppHeader';
@@ -9,7 +9,7 @@ import { fetchIngredients } from '../../services/reducers/burgerIngredients';
 import { useAppDispatch } from '../../services/store';
 
 
-export const IngredientPage: FC = (): ReactElement => {
+export const IngredientPage: FC = () => {
 
     const dispatch = useAppDispatch();
 

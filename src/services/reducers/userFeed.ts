@@ -4,7 +4,7 @@ import { IOrder } from '../../utils/types';
 import { IFeedState } from './feed';
  
  
-const initialState: IFeedState = {
+export const initialState: IFeedState = {
   isEstablishingConnection: false,
   isConnecting: false,
   isConnected: false,

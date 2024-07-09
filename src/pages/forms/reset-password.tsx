@@ -20,7 +20,7 @@ export const ResetPasswordPage: FC = () => {
     //Флаг, что на эту страницу перешли с формы восстановления пароля. Если его нет - перенаправляем пользователя туда, откуда он пришел.
     const resetMailSend = useAppSelector(getResetMailSend);
 
-    let submit = (e: React.FormEvent<HTMLFormElement>) => {
+    const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(resetPassword(values));
     }

@@ -1,4 +1,4 @@
-import { FC, ReactElement } from "react";
+import { FC } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 // Стили
@@ -21,7 +21,7 @@ type TIngredientImage = {
     mini: boolean;
 }
 
-const IngredientImage: FC<TIngredientImage> = ({image, alt, text, mini}) : ReactElement => {
+const IngredientImage: FC<TIngredientImage> = ({image, alt, text, mini}) => {
     return(
         <div className={`${styles.wrapper} ${mini ? styles.wrapperMarginLeft : styles.wrapperMarginRight}`}>
             <div className={styles.innerWrapper}>
@@ -33,7 +33,7 @@ const IngredientImage: FC<TIngredientImage> = ({image, alt, text, mini}) : React
     )
 }
 
-const OrderIngredient: FC<TOrderIngredient> = ({ingredient, text, mini = true}): ReactElement => {
+const OrderIngredient: FC<TOrderIngredient> = ({ingredient, text, mini = true}) => {
     return(
         <>
             {mini ? (

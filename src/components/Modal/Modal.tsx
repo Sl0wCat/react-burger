@@ -1,4 +1,4 @@
-import React, { useCallback, FC, ReactElement } from "react";
+import React, { useCallback, FC } from "react";
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from "react-router-dom";
@@ -15,13 +15,16 @@ type TModal = {
     children: React.ReactNode
 }
 
-const Modal: FC<TModal> = ({ children, header = null }): ReactElement => {
+const Modal: FC<TModal> = ({ children, header = null, onClose = null }) => {
     const modalRoot = document.getElementById("modal");
     let navigate = useNavigate();
 
     const closeModal = useCallback(() => {
-        navigate(-1);
-    }, [navigate]);
+        if (onClose)
+            onClose();
+        else
+            navigate(-1);
+    }, [navigate, onClose]);
     
     React.useEffect(() => {
         const close = (e: KeyboardEvent): void => {
@@ -36,10 +39,10 @@ const Modal: FC<TModal> = ({ children, header = null }): ReactElement => {
     return ReactDOM.createPortal(
         (
             <ModalOverlay onClose={closeModal}>
-                <div className={styles.modalContent + " pt-10 pr-10 pb-15 pl-10"} onClick={e => e.stopPropagation()}>
+                <div className={styles.modalContent + " pt-10 pr-10 pb-15 pl-10"} onClick={e => e.stopPropagation()} data-testid='modal-window'>
                     <h1 className={styles.modalTitle + " text text_type_main-large"}>
-                        {header && header}
-                        <span className={styles.closeButton}>
+                        {header}
+                        <span className={styles.closeButton} data-testid='close-modal-button'>
                             <CloseIcon onClick={closeModal} type="primary" />
                         </span>
                     </h1>

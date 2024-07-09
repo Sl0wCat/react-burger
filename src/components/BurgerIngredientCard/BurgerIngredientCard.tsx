@@ -1,7 +1,7 @@
 import { useDrag } from "react-dnd";
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation } from "react-router-dom";
-import { FC, ReactElement } from "react";
+import { FC } from "react";
 
 // Редьюсеры
 import { getConstructor, useAppSelector } from "../../services/store";
@@ -16,7 +16,7 @@ type TBurgerIngredientCard = {
   ingredient: TIngredient,
 }
 
-const BurgerIngredientCard: FC<TBurgerIngredientCard> = ({ingredient}): ReactElement => {
+const BurgerIngredientCard: FC<TBurgerIngredientCard> = ({ingredient}) => {
   const burgerConstructor = useAppSelector(getConstructor);
 
   // Количество ингридиента в конструкторе
@@ -37,7 +37,7 @@ const BurgerIngredientCard: FC<TBurgerIngredientCard> = ({ingredient}): ReactEle
 
   return (
     <>
-      <div ref={dragRef} className={styles.ingredientCard + " pr-4 pl-4"} >
+      <div ref={dragRef} data-testid={ingredient._id} className={styles.ingredientCard + " pr-4 pl-4"} >
         <Link
           to={`/ingredients/${ingredient._id}`}
           state={{backgroundLocation: location}}

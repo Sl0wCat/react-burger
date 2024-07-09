@@ -75,6 +75,7 @@ export const getOrdersTotalCount = (state: RootState) => state.feed.total;
 export const getOrdersTodayCount = (state: RootState) => state.feed.totalToday;
 export const getOrderInfoFetching = (state: RootState) => state.order.orderInfoFetching
 export const getOrderInfoError = (state: RootState) => state.order.orderInfoError;
+export const getLoginError = (state: RootState) => state.user.error;
 
 export const getIngredient = (id: string) => (state: RootState): TIngredient | null => {
     const res = state.ingredients.dataObject[id]
