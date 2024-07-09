@@ -1,7 +1,7 @@
 describe('Test placing order', () => {
 
     beforeEach(() => {
-      cy.visit('http://localhost:3000');
+      cy.visit('/')
       cy.intercept("GET", "api/auth/user", { fixture: "user.json" });
       cy.intercept("GET", "api/ingredients", { fixture: "ingredients.json" });
       cy.intercept("POST", "api/orders", { fixture: "order.json" }).as("postOrder");
@@ -11,6 +11,8 @@ describe('Test placing order', () => {
         "accessToken",
         JSON.stringify("test-accessToken")
       );
+
+      cy.get('[data-testid="order-button"]').as('orderButton')
     });
   
   
@@ -23,11 +25,11 @@ describe('Test placing order', () => {
       cy.addIngredient('643d69a5c3f7b9001cfa0942');
   
       // Проверка что кнопка Оформить заказ активна
-      cy.get('[data-testid="order-button"]').should('not.be.disabled');
+      cy.get('@orderButton').should('not.be.disabled');
   
   
       // Создание заказа
-      cy.get('[data-testid="order-button"]').click();
+      cy.get('@orderButton').click();
       cy.get("[data-testid=order-number]").contains("123").should("exist");
   
       // Закрытие модального окна
